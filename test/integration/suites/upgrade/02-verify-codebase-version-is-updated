@@ -52,7 +52,7 @@ _commit_version=$(docker compose exec -T spire-server-latest-local \
 docker-down
 
 # Get tag of the current commit
-_current_tag=$($git describe --exact-match HEAD --match "v*"  2> /dev/null | cut -c 2- || true)
+_current_tag=$($git describe --exact-match HEAD --match "v*"  2> /dev/null | cut -c 2- | cut -d"-" -f 1 || true)
 
 case "${_current_tag}" in
 

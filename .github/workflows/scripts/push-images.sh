@@ -54,7 +54,7 @@ OCI_IMAGES=(
   spire-server spire-agent oidc-discovery-provider
 )
 
-org_name=$(echo "$GITHUB_REPOSITORY" | tr '/' "\n" | head -1 | tr -d "\n")
+org_name=$(echo "$GITHUB_REPOSITORY" | tr '/' "\n" | head -1 | tr -d "\n" | tr "[:upper:]" "[:lower:]")
 org_name="${org_name:-spiffe}" # default to spiffe in case ran on local
 registry=ghcr.io/${org_name}
 
