@@ -66,7 +66,9 @@ for img in "${OCI_IMAGES[@]}"; do
   regctl image import "${oci_dir}" "${img}-image.tar"
   regctl image copy "${oci_dir}" "${image_to_push}"
 
-  image_digest="$(jq -r '.manifests[0].digest' "${ROOTDIR}oci/${img}/index.json")"
+  # Sign the digest that was pushed. The ocidir index.json may list referrers
+  # fallback indexes (for buildkit attestations) ahead of the image itself.
+  image_digest="$(regctl image digest "${image_to_push}")"
 
   cosign sign -y "${registry}/${img}@${image_digest}"
 done
